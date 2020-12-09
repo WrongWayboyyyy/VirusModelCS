@@ -93,11 +93,12 @@ namespace VirusModel
         public String Surname;
         public String Midname;
         public String Birthday;
+        public readonly Double Salary;
         private Int64 _weeksToRecover;
         private Boolean _vaccinated;
         private Int64 _weeksToBeVaccinated;
         
-        public readonly Double Salary;
+        
 
     }
 }

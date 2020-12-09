@@ -45,16 +45,17 @@ namespace VirusModel
 
         public void UpdateEconomic()
         {
-            Double initialBudget = ModelConstants.CountryIncomePerWeek;
             _cities.Sort();
+            
             foreach (var city in _cities)
             {
-                // TO DO
+                //city.Budget += ModelConstants.CalculateBudget(city.IllnessFraction);
             }
         }
 
         private DateTime _time;
         private Season _season;
+        private Double _budget;
         private List<City> _cities;
 
     }

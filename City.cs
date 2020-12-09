@@ -75,25 +75,21 @@ namespace VirusModel
             _transportActivity = transportActivity;
             _infected = initialInfection;
         }
-
-        private List<Citizen> _citizens;
-
         public readonly String Name;
-        private Int64 _population;
-        private readonly Double _transportActivity;
-
         public Double Budget
         {
             get => _budget;
             set => _budget = value;
         }
-
-        private Double _budget;
-
         public Double IllnessFraction
         {
-            get => _population / _infected;
+            get => (double)_population / _infected;
         }
+        
+        private List<Citizen> _citizens;
+        private Int64 _population;
+        private readonly Double _transportActivity;
+        private Double _budget;
         private Int64 _infected;
 
     }
