@@ -12,10 +12,11 @@ namespace VirusModel
         public static readonly Double OneWeekIllnessRate = 0.25;
         public static readonly Int64 ImmunityWeeksDuration = 12;
         public static readonly Int64 VaccinationDuration = 3;
-        public static readonly Double BonusIncomePerWeek = 1_000_000_000;
-        public static readonly Double BasicIncomePerWeek = 100_000_000;
+        public static readonly Double CountryIncomePerWeek = 100_000_000;
         public static readonly Int64 TotalAmountOfCities = 13;
         public static readonly Int64 TotalAmountOfCitizens = 10_000_000;
+        public static readonly Double PandemicThreshold = 45;
+        public static readonly Double DefaultSalary = 100000;
 
         public static Double SeasonConstant(Season season)
         {
@@ -35,11 +36,6 @@ namespace VirusModel
             }
 
             return 0;
-        }
-
-        public static Double CalculateBudget(Double illnessFraction, Double currentBudget)
-        {
-            return BasicIncomePerWeek + 2 * illnessFraction * BonusIncomePerWeek / TotalAmountOfCities;
         }
     }
 }

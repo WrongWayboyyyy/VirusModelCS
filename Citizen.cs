@@ -4,13 +4,21 @@ namespace VirusModel
 {
     public class Citizen
     {
-        Citizen(String name, String surname, String midname, String birthday, Double salary)
+        public Citizen(String name = null, String surname = null, String midname = null, String birthday = null, 
+            Double salary = -1)
         {
             Name = name;
             Surname = surname;
             Midname = midname;
             Birthday = birthday;
-            Salary = salary;
+            if (salary == -1)
+            {
+                Salary = ModelConstants.DefaultSalary;
+            }
+            else
+            {
+                Salary = salary;
+            }
             _weeksToBeVaccinated = -1;
             _weeksToRecover = 0;
         }

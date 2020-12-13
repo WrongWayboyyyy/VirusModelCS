@@ -1,12 +1,21 @@
 ﻿﻿using System;
 using System.Collections.Generic;
-using System.Text;
+ using System.Linq;
+ using System.Text;
 
 namespace VirusModel
 {
     class Country
     {
-        public readonly String Name;
+        private readonly String _name;
+
+
+        public Country(String name, DateTime time, Double budget)
+        {
+            _name = name;
+            _time = time;
+            _budget = budget;
+        }
         public Int64 Population
         {
             get
@@ -36,7 +45,7 @@ namespace VirusModel
 
         public void UpdateCityState()
         {
-            // TO ADD UpdateEconomic() and other
+            UpdateEconomic();
             foreach (var city in _cities)
             {
                 city.Update(_season);
@@ -45,18 +54,32 @@ namespace VirusModel
 
         public void UpdateEconomic()
         {
-            _cities.Sort();
-            
+            Double totalBudget = 0;
             foreach (var city in _cities)
             {
-                //city.Budget += ModelConstants.CalculateBudget(city.IllnessFraction);
+                totalBudget += city.Budget;
             }
+
+            Double averageBudget = totalBudget / ModelConstants.TotalAmountOfCities;
+            Double availableAvgBudget = ModelConstants.CountryIncomePerWeek / ModelConstants.TotalAmountOfCities;
+            Double averageToSpend = System.Math.Min(averageBudget, availableAvgBudget);
+            foreach (var city in _cities)
+            {
+                city.Budget += averageToSpend * (averageToSpend / city.Budget) * (1 + Math.Min(0, city.IllnessFraction) - 0.45);
+            }
+
+        }
+
+        public void AddCity(City new_city)
+        {
+            _cities.Append(new_city);
         }
 
         private DateTime _time;
         private Season _season;
         private Double _budget;
         private List<City> _cities;
+        
 
     }
 }
