@@ -1,6 +1,7 @@
 ﻿﻿using System;
  using System.Collections;
  using System.Collections.Generic;
+ using System.Linq;
  using System.Text;
 
 namespace VirusModel
@@ -68,32 +69,37 @@ namespace VirusModel
             }
         }
 
-        public City(String name, Int64 population, Double transportActivity, Int64 initialInfection)
+        public City(String name = "City", Int64 population = 1_000_000, Double transportActivity = 1, Int64 initialInfection = 5000)
         {
             Name = name;
             _population = population;
             _transportActivity = transportActivity;
             _infected = initialInfection;
+            for (int i = 0; i < population; ++i)
+            {
+                Citizen dude = new Citizen();
+            }
         }
-
-        private List<Citizen> _citizens;
-
         public readonly String Name;
-        private Int64 _population;
-        private readonly Double _transportActivity;
-
         public Double Budget
         {
             get => _budget;
             set => _budget = value;
         }
-
-        private Double _budget;
-
         public Double IllnessFraction
         {
-            get => _population / _infected;
+            get => (double)_population / _infected;
         }
+
+        public void AddCitizen(Citizen new_citizen)
+        {
+            _citizens.Append(new_citizen);
+        }
+        
+        private List<Citizen> _citizens;
+        private Int64 _population;
+        private readonly Double _transportActivity;
+        private Double _budget;
         private Int64 _infected;
 
     }
