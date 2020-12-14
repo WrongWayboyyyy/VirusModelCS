@@ -4,7 +4,7 @@
  using System.Linq;
  using System.Text;
 
-namespace VirusModel
+namespace ConsoleApplication.Core
 {
     class City : IComparable
     {
@@ -34,10 +34,8 @@ namespace VirusModel
             {
                 return this.IllnessFraction.CompareTo(otherCity.IllnessFraction);
             }
-            else
-            {
-                throw new ArgumentException("Object is not a City");
-            }
+            throw new ArgumentException("Object is not a City");
+            
         }
 
         public void Update(Season season)
@@ -46,6 +44,8 @@ namespace VirusModel
             {
                 citizen.Update();
             }
+
+            if (IllnessFraction > 0.45) _currentTransportActivity = 0.05;
             SpreadingInfection(season);
         }
 
@@ -70,7 +70,7 @@ namespace VirusModel
             Double randomParameter1 = 0.3 + Math.Min(rand.NextDouble(), 0.7);
             Double randomParameter2 = 0.5 + Math.Min(rand.NextDouble(), 0.2);
             Double estimatedToBeInfected = IllnessFraction * ModelConstants.InfectionRate * randomParameter1
-                                           * randomParameter2 * seasonRate * _population * _transportActivity;
+                                           * randomParameter2 * seasonRate * _population * _currentTransportActivity;
             Int64 toBeInfected = Math.Min((int)estimatedToBeInfected, _citizens.Count - Infected);
             for (int i = 0; i < toBeInfected; ++i)
             {
@@ -83,17 +83,13 @@ namespace VirusModel
         public City(String name = "City", Double transportActivity = 1)
         {
             _name = name;
-            _transportActivity = transportActivity;
+            _initialTransportActivity = _currentTransportActivity = transportActivity;
             _citizens = new List<Citizen>();
         }
 
         public String Name
         {
             get => _name;
-            set
-            {
-                _name = value;
-            }
         }
 
         public Double Budget
@@ -113,7 +109,7 @@ namespace VirusModel
 
         public override string ToString()
         {
-            string information = $"City {_name}, {_population} citizens, {Infected} infected, {Vaccinated} vaccinated, {_budget}$";
+            string information = $"City {_name}, {_population} citizens, {Infected} infected, {Vaccinated} vaccinated, {_budget} y.e";
             return information;
         }
 
@@ -176,7 +172,8 @@ namespace VirusModel
         }
         
         private List<Citizen> _citizens;
-        private readonly Double _transportActivity;
+        private Double _currentTransportActivity;
+        private readonly Double _initialTransportActivity;
         private Double _budget;
         
 

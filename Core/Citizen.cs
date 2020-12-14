@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace VirusModel
+namespace ConsoleApplication.Core
 {
     public class Citizen
     {

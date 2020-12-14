@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace VirusModel
+namespace ConsoleApplication.Core
 {
     public static class ModelConstants
     {
@@ -11,12 +11,14 @@ namespace VirusModel
         public static readonly Double ThreeWeeksIllnessRate = 0.15;
         public static readonly Double OneWeekIllnessRate = 0.25;
         public static readonly Int64 ImmunityWeeksDuration = 24;
-        public static readonly Int64 VaccinationDuration = 3;
-        public static readonly Double CountryIncomePerWeek = 10_000_000;
+        public static readonly Int64 VaccinationDuration = 6;
+        public static readonly Double CountryIncomePerWeek = 1_000_000;
         public static readonly Double PandemicThreshold = 0.45;
-        public static readonly Double DefaultSalary = 100000;
+        public static readonly Double DefaultSalary = 43400;
         public static readonly Double VaccinationCost = 5000;
         public static readonly Int64 AmountOfVaccinesPerWeek = 100_000;
+        public static readonly DateTime StartingDateTime = new DateTime(2020, 9, 1);
+        
 
         public static Double SeasonConstant(Season season)
         {

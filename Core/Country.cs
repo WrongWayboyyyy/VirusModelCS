@@ -3,7 +3,7 @@ using System.Collections.Generic;
  using System.Linq;
  using System.Text;
 
-namespace VirusModel
+namespace ConsoleApplication.Core
 {
     class Country
     {
@@ -16,7 +16,7 @@ namespace VirusModel
             _budget = budget;
             _cities = new List<City>();
             _season = new Season();
-            _time = new DateTime(2020, 9, 1);
+            _time = ModelConstants.StartingDateTime;
 
         }
 
@@ -66,6 +66,25 @@ namespace VirusModel
             }
 
             _time = _time.AddDays(7);
+            if (_time.DayOfYear < 31 || _time.DayOfYear > 304)
+            {
+                _season = Season.Winter;
+            }
+
+            if (_time.DayOfYear > 31 && _time.DayOfYear < 153)
+            {
+                _season = Season.Spring;
+            }
+
+            if (_time.DayOfYear > 153 && _time.DayOfYear < 244)
+            {
+                _season = Season.Summer;
+            }
+
+            if (_time.DayOfYear > 244 && _time.DayOfYear < 304)
+            {
+                _season = Season.Autumn;
+            }
         }
 
         public void UpdateVaccination()
@@ -105,7 +124,7 @@ namespace VirusModel
 
         public override string ToString()
         {
-            string result = "--------------------------------------------\n";
+            string result = $"{_time}, {_season}---------------------------------\n";
             int i = 1;
             foreach (var city in _cities)
             {
@@ -113,7 +132,7 @@ namespace VirusModel
                 result += $"{i++}.  {city.ToString()} \n";
             }
 
-            result += "--------------------------------------------\n";
+            result += "--------------------------------------------------\n";
             return result;
         }
 
@@ -136,6 +155,7 @@ namespace VirusModel
         private Season _season;
         private Double _budget;
         private List<City> _cities;
+        private readonly DateTime _initialDate;
 
     }
 }

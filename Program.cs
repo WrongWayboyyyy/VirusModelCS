@@ -1,5 +1,5 @@
 ﻿using System;
-using VirusModel;
+using ConsoleApplication.Core;
 
 namespace ConsoleApplication
 {
@@ -14,6 +14,7 @@ namespace ConsoleApplication
                 if (nextQuery[0].ToLower() == "add_city")
                 {
                     String name = nextQuery[1];
+                    
                     City myCity = new City(name);
                     bool ok = myCountry.AddCity(myCity);
                     if (!ok)
