@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace VirusModel
+namespace ConsoleApplication.Core
 {
     public class Citizen
     {
@@ -21,10 +21,14 @@ namespace VirusModel
             }
             _weeksToBeVaccinated = -1;
             _weeksToRecover = 0;
+            Random rand = new Random();
         }
 
         public void BecomeInfected()
         {
+            if (VaccinationStatus == true)
+                return;
+            
             Random rand = new Random();
             int recoverRate = rand.Next() % 100;
             if (recoverRate < ModelConstants.OneWeekIllnessRate)
@@ -39,7 +43,6 @@ namespace VirusModel
             {
                 WeeksToRecover = 3;
             }
-            _weeksToBeVaccinated = _weeksToRecover;
         }
 
         public void BecomeVaccinated()
@@ -63,8 +66,10 @@ namespace VirusModel
             if (_weeksToBeVaccinated == 0)
             {
                 VaccinationStatus = true;
-                _weeksToRecover = -12;
+                _weeksToRecover = -ModelConstants.VaccinationDuration;
             }
+            
+            
         }
 
         private void UpdateInfectionStatus()
@@ -74,7 +79,7 @@ namespace VirusModel
                 _weeksToRecover--;
                 if (_weeksToRecover == 0)
                 {
-                    _weeksToRecover = ModelConstants.ImmunityWeeksDuration;
+                    _weeksToRecover = -ModelConstants.ImmunityWeeksDuration;
                 }
             }
             else if (_weeksToRecover < 0)
@@ -83,6 +88,7 @@ namespace VirusModel
                 if (_weeksToRecover == 0)
                 {
                     VaccinationStatus = false;
+                    WeeksToBeVaccinated = -1;
                 }
             }
         }
@@ -90,6 +96,12 @@ namespace VirusModel
         {
             get => _weeksToRecover;
             set => _weeksToRecover = value;
+        }
+        
+        public Int64 WeeksToBeVaccinated
+        {
+            get => _weeksToBeVaccinated;
+            set => _weeksToBeVaccinated = value;
         }
 
         public Boolean VaccinationStatus
@@ -105,8 +117,9 @@ namespace VirusModel
         private Int64 _weeksToRecover;
         private Boolean _vaccinated;
         private Int64 _weeksToBeVaccinated;
-        
-        
+        private Boolean _isolated;
+
+
 
     }
 }

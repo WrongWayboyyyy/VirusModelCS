@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace VirusModel
+namespace ConsoleApplication.Core
 {
     public enum Season
-    {
-        Summer, Autumn, Winter, Spring
-    }
+        {
+            Summer, Autumn, Winter, Spring
+        }
 }
